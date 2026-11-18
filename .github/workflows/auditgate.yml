@@ -1,0 +1,31 @@
+# Auditgate — https://github.com/Jawy77/auditgate
+# Generado por `auditgate init`. Version fijada por SHA (supply chain).
+name: Auditgate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  auditgate:
+    uses: Jawy77/auditgate/.github/workflows/security-platform.yml@9f7da337827ede4513dc945b93a0f0077cedb244 # feat/multi-provider-cli
+    permissions:
+      contents: read
+      security-events: write # alertas en Code Scanning
+      pull-requests: write # comentario del agente de triage
+      id-token: write # solo si usas Claude sin llave (WIF)
+    with:
+      platform-ref: 9f7da337827ede4513dc945b93a0f0077cedb244 # mismo SHA que el `uses:`
+      requirements: "requirements.txt"
+      image-dockerfile: ""
+      iac-dir: ""
+      enforce-pinned-actions: true
+      # Modelo del agente: variables del repo. La llave vive en el Environment `auditgate`.
+      llm-provider: ${{ vars.AUDITGATE_LLM_PROVIDER }}
+      llm-model: ${{ vars.AUDITGATE_LLM_MODEL }}
+      llm-base-url: ${{ vars.AUDITGATE_LLM_BASE_URL }}
