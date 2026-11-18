@@ -19,6 +19,8 @@ jobs:
       security-events: write # alertas en Code Scanning
       pull-requests: write # comentario del agente de triage
       id-token: write # solo si usas Claude sin llave (WIF)
+    # Necesario para que el job del agente reciba el secreto del Environment `auditgate`.
+    secrets: inherit
     with:
       platform-ref: 9f7da337827ede4513dc945b93a0f0077cedb244 # mismo SHA que el `uses:`
       requirements: "requirements.txt"
